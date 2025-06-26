@@ -92,8 +92,6 @@ namespace LeTranBaoDuyWPF
             currentOrder.OrderDate = orderDate.Value;
 
             bool result = isEditMode ? orderService.UpdateOrder(currentOrder) : orderService.AddOrder(currentOrder);
-                
-                
 
             if (result)
             {
