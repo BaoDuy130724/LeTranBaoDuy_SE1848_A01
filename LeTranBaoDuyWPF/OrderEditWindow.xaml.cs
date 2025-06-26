@@ -91,9 +91,9 @@ namespace LeTranBaoDuyWPF
             currentOrder.EmployeeId = employeeId;
             currentOrder.OrderDate = orderDate.Value;
 
-            bool result = isEditMode
-                ? orderService.UpdateOrder(currentOrder)
-                : orderService.AddOrder(currentOrder);
+            bool result = isEditMode ? orderService.UpdateOrder(currentOrder) : orderService.AddOrder(currentOrder);
+                
+                
 
             if (result)
             {
