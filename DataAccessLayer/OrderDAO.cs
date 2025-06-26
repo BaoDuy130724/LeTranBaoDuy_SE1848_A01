@@ -19,9 +19,9 @@ namespace DataAccessLayer
             {
                 using var context = new LucySalesDataContext();
                 orders = context.Orders
-                    .Include(o => o.OrderDetails) // Include related OrderDetails
-                    .Include(o => o.Employee) // Include related Employee
-                    .Include(o => o.Customer) // Include related Customer
+                    .Include(o => o.OrderDetails) 
+                    .Include(o => o.Employee) 
+                    .Include(o => o.Customer) 
                     .ToList();
             }
             catch (Exception ex)

@@ -26,35 +26,41 @@ namespace LeTranBaoDuyWPF
         private EmployeeService employeeService;
         private readonly bool isEditMode;
         private Order currentOrder;
+        private readonly List<Customer> customers;
+        private readonly List<Employee> employees;
         public OrderEditWindow(Order order = null)
         {
             InitializeComponent();
             orderService = new OrderService();
             customerService = new CustomerService();
             employeeService = new EmployeeService();
+            customers = customerService.GetCustomers();
+            employees = employeeService.GetEmployees();
             LoadCmbData();
             if (order == null)
             {
                 isEditMode = false;
                 currentOrder = new Order();
-                dpOrderDate.SelectedDate = DateTime.Now;
+                dpOrderDate.SelectedDate = DateTime.Today;
             }
             else
             {
                 isEditMode = true;
                 currentOrder = order;
-                cmbCustomer.SelectedItem = customerService.GetCustomers().FirstOrDefault(c => c.CustomerId == order.CustomerId);
-                cmbEmployee.SelectedItem = employeeService.GetEmployees().FirstOrDefault(e => e.EmployeeId == order.EmployeeId);
+                cmbCustomer.SelectedValue = order.CustomerId;
+                cmbEmployee.SelectedValue = order.EmployeeId;
                 dpOrderDate.SelectedDate = order.OrderDate;
             }
 
         }
         private void LoadCmbData()
         {
-            cmbCustomer.ItemsSource = customerService.GetCustomers();
+            cmbCustomer.ItemsSource = customers;
             cmbCustomer.DisplayMemberPath = "ContactName";
-            cmbEmployee.ItemsSource = employeeService.GetEmployees();
+            cmbCustomer.SelectedValuePath = "CustomerId";
+            cmbEmployee.ItemsSource = employees;
             cmbEmployee.DisplayMemberPath = "Name";
+            cmbEmployee.SelectedValuePath = "EmployeeId";
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -69,46 +75,39 @@ namespace LeTranBaoDuyWPF
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            var cus = cmbCustomer.SelectedItem as Customer;
-            var emp = cmbEmployee.SelectedItem as Employee;
-            var date = dpOrderDate.SelectedDate;
-            if (cus == null || emp == null || date == null)
+            object? customerVal = cmbCustomer.SelectedValue;
+            object? employeeVal = cmbEmployee.SelectedValue;
+            DateTime? orderDate = dpOrderDate.SelectedDate;
+
+            if (customerVal == null || employeeVal == null || orderDate == null)
             {
-                MessageBox.Show("Please select a customer, employee and order date.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Please select a customer, employee and order date.",
+                                "Validation Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            currentOrder.CustomerId = cus.CustomerId;
-            currentOrder.EmployeeId = emp.EmployeeId;
-            currentOrder.OrderDate = date.Value;
-            currentOrder.Customer = cus;
-            currentOrder.Employee = emp;
-            if (isEditMode)
+            int customerId = (int)customerVal;
+            int employeeId = (int)employeeVal;
+            currentOrder.CustomerId = customerId;
+            currentOrder.EmployeeId = employeeId;
+            currentOrder.OrderDate = orderDate.Value;
+
+            bool result = isEditMode
+                ? orderService.UpdateOrder(currentOrder)
+                : orderService.AddOrder(currentOrder);
+
+            if (result)
             {
-                if (orderService.UpdateOrder(currentOrder))
-                {
-                    MessageBox.Show("Order updated successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-                else
-                {
-                    MessageBox.Show("Failed to update order.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                MessageBox.Show(isEditMode ? "Order updated successfully." : "Order added successfully.",
+                    "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                DialogResult = true;
             }
             else
             {
-                if (orderService.AddOrder(currentOrder))
-                {
-                    MessageBox.Show("Order added successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-                else
-                {
-                    MessageBox.Show("Failed to add order.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                MessageBox.Show("Failed to save order.",
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            DialogResult = true;
         }
-        public Order GetOrder()
-        {
-            return currentOrder;
-        }
+        public Order GetOrder() =>  currentOrder;
+        
     }
 }

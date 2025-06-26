@@ -47,7 +47,7 @@ namespace DataAccessLayer
             try
             {
                 using var context = new LucySalesDataContext();
-                products = context.Products.Where(p=>p.ProductName.Equals(name)).ToList();
+                products = context.Products.Where(p=>p.ProductName.Contains(name)).ToList();
             }
             catch (Exception ex)
             {

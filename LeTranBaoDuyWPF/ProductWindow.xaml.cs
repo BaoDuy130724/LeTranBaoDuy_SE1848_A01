@@ -49,14 +49,21 @@ namespace LeTranBaoDuyWPF
             if (editWindow.ShowDialog() == true)
             {
                 var updatedProduct = editWindow.GetProduct();
-                productService.UpdateProduct(updatedProduct);
+                if (productService.UpdateProduct(updatedProduct))
+                {
+                    MessageBox.Show("Product updated successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Failed to update product.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
                 Loadata();
             }
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            if(dgProducts.SelectedItem == null)
+            if (dgProducts.SelectedItem == null)
             {
                 MessageBox.Show("Please select a product to delete.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
@@ -65,7 +72,7 @@ namespace LeTranBaoDuyWPF
             if (selectedProduct != null)
             {
                 var ret = MessageBox.Show($"Are you sure you want to delete product {selectedProduct.ProductName}?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if(ret == MessageBoxResult.Yes)
+                if (ret == MessageBoxResult.Yes)
                 {
                     bool deleted = productService.DeleteProduct(selectedProduct);
                     if (deleted)
@@ -98,7 +105,14 @@ namespace LeTranBaoDuyWPF
             if (addProduct.ShowDialog() == true)
             {
                 var newProduct = addProduct.GetProduct();
-                productService.AddProduct(newProduct);
+                if (productService.AddProduct(newProduct))
+                {
+                    MessageBox.Show("Product added successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Failed to add product.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
                 Loadata();
             }
         }

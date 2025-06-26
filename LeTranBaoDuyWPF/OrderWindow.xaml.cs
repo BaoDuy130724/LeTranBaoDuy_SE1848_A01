@@ -24,7 +24,7 @@ namespace LeTranBaoDuyWPF
         OrderService orderservice;
         OrderDetailService orderDetailService;
         private List<Order> orders;
-        private List<OrderDetail> ordersDetail; 
+        private List<OrderDetail> ordersDetail;
         public OrderWindow()
         {
             InitializeComponent();
@@ -45,7 +45,7 @@ namespace LeTranBaoDuyWPF
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
             string keyword = txtsearch.Text.Trim().ToLower();
-            if(string.IsNullOrEmpty(keyword))
+            if (string.IsNullOrEmpty(keyword))
             {
                 LoadData();
             }
@@ -72,9 +72,10 @@ namespace LeTranBaoDuyWPF
         private void Add_Click(object sender, RoutedEventArgs e)
         {
             var addOrderWindow = new OrderEditWindow();
-            if(addOrderWindow.ShowDialog() == true)
+            if (addOrderWindow.ShowDialog() == true)
             {
-                orderservice.AddOrder(addOrderWindow.GetOrder());
+                var newOrder = addOrderWindow.GetOrder();
+                orderservice.AddOrder(newOrder);
                 LoadData();
             }
         }
@@ -93,12 +94,12 @@ namespace LeTranBaoDuyWPF
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
             var order = dgOrders.SelectedItem as Order;
-            if(order == null)
+            if (order == null)
             {
                 MessageBox.Show("Please select an order to delete.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            if(orderDetailService.HasDetails(order.OrderId))
+            if (orderDetailService.HasDetails(order.OrderId))
             {
                 MessageBox.Show("Cannot delete order with existing details.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
@@ -121,7 +122,7 @@ namespace LeTranBaoDuyWPF
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
             var order = dgOrders.SelectedItem as Order;
-            if(order == null)
+            if (order == null)
             {
                 MessageBox.Show("Please select an order to edit.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
@@ -129,7 +130,8 @@ namespace LeTranBaoDuyWPF
             var editOrderWindow = new OrderEditWindow(order);
             if (editOrderWindow.ShowDialog() == true)
             {
-                orderservice.UpdateOrder(editOrderWindow.GetOrder());
+                var updatedOrder = editOrderWindow.GetOrder();
+                orderservice.UpdateOrder(updatedOrder);
                 LoadData();
             }
         }
