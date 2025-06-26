@@ -1,0 +1,46 @@
+﻿<Window x:Class="LeTranBaoDuyWPF.ProductEditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LeTranBaoDuyWPF"
+        mc:Ignorable="d"
+        Title="LeTranBaoDuy-SE182424-ProductEditWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Product Name:" Margin="5" Grid.Row="0" Grid.Column="0"/>
+        <TextBox x:Name="txtProductName" Grid.Row="0" Grid.Column="1" Margin="5"/>
+        <Label Content="Supplier:" Margin="5" Grid.Row="1" Grid.Column="0"/>
+        <TextBox x:Name="txtSupplier" Grid.Row="1" Grid.Column="1" Margin="5"/>
+        <Label Content="Category:" Margin="5" Grid.Row="2" Grid.Column="0"/>
+        <TextBox x:Name="txtCategory" Grid.Row="2" Grid.Column="1" Margin="5"/>
+        <Label Content="Quantity/Unit:" Margin="5" Grid.Row="3" Grid.Column="0"/>
+        <TextBox x:Name="txtQuantity" Grid.Row="3" Grid.Column="1" Margin="5"/>
+        <Label Content="Unit Price:" Margin="5" Grid.Row="4" Grid.Column="0"/>
+        <TextBox x:Name="txtUnitPrice" Grid.Row="4" Grid.Column="1" Margin="5"/>
+        <Label Content="Stock:" Margin="5" Grid.Row="5" Grid.Column="0"/>
+        <TextBox x:Name="txtStock" Grid.Row="5" Grid.Column="1" Margin="5"/>
+        <Label Content="On Order:" Margin="5" Grid.Row="6" Grid.Column="0"/>
+        <TextBox x:Name="txtOnOrder" Grid.Row="6" Grid.Column="1" Margin="5"/>
+        <Label Content="Reorder Level:" Margin="5" Grid.Row="7" Grid.Column="0"/>
+        <TextBox x:Name="txtReorder" Grid.Row="7" Grid.Column="1" Margin="5"/>
+        <StackPanel Grid.Row="8" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
+            <Button x:Name="btnSave" Content="Save" Width="80" Margin="5" FontSize="15" Click="btnSave_Click"/>
+            <Button x:Name="btnCancel" Content="Cancel" Width="80" Margin="5" FontSize="15" Click="btnCancel_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

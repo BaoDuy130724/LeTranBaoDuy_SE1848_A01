@@ -1,0 +1,32 @@
+﻿<Window x:Class="LeTranBaoDuyWPF.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LeTranBaoDuyWPF"
+        mc:Ignorable="d"
+        Title="LeTranBaoDuy-SE182424-LoginWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Login As:" FontWeight="Bold" Grid.Row="0"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <RadioButton x:Name="rdoAdmin" Content="Employee" IsChecked="True"/>
+            <RadioButton Content="Customer" Margin="30,0,0,0"/>
+        </StackPanel>
+        <Label Content="Username/Phone:" Margin="0,10,0,0" Grid.Row="2"/>
+        <TextBox x:Name="txtUsername" Grid.Row="3"/>
+        <Label Content="Password (Only Employee):" Margin="0,10,0,0" Grid.Row="4"/>
+        <PasswordBox x:Name="txtPassword" Grid.Row="5"/>
+        <Button x:Name="btnLogin" Content="Login" Margin="276,10,352,0" Click="btnLogin_Click" Grid.Row="6"/>
+        <Button x:Name="btnExit" Content="Exit" Margin="276,10,352,0" Click="btnExit_Click" Grid.Row="7" />
+    </Grid>
+</Window>

@@ -1,0 +1,43 @@
+﻿<Window x:Class="LeTranBaoDuyWPF.ProductWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LeTranBaoDuyWPF"
+        mc:Ignorable="d"
+        Title="LeTranBaoDuy-SE182424-ProductWindow" Height="450" Width="800">
+    <Grid>
+        <DockPanel LastChildFill="True">
+            <TextBlock DockPanel.Dock="Top" Text="Product Management" FontSize="20" FontWeight="Bold"
+                       HorizontalAlignment="Center" Margin="0,10"/>
+
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="10" HorizontalAlignment="Center">
+                <TextBox x:Name="txtSearch" Width="595" Margin="5"/>
+                <Button x:Name="btnSearch" Content="Search" Width="80" Margin="5" Click="btnSearch_Click"/>
+                <Button x:Name="btnReset" Content="Reset" Width="80" Margin="5" Click="btnReset_Click"/>
+            </StackPanel>
+
+            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                <Button x:Name="btnUpdate" Content="Update" Width="80" Margin="5" Click="btnUpdate_Click"/>
+                <Button x:Name="btnDelete" Content="Delete" Width="80" Margin="5" Click="btnDelete_Click"/>
+                <Button x:Name="btnBack" Content="Back" Width="80" Margin="5" Click="btnBack_Click"/>
+                <Button x:Name="btnAdd" Content="Add" Width="80" Margin="5" Click="btnAdd_Click" Height="22"/>
+            </StackPanel>
+
+            <DataGrid x:Name="dgProducts" AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False" Margin="10">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Product ID" Binding="{Binding ProductId}" Width="*"/>
+                    <DataGridTextColumn Header="Name" Binding="{Binding ProductName}" Width="*"/>
+                    <DataGridTextColumn Header="Supplier" Binding="{Binding SupplierId}" Width="*"/>
+                    <DataGridTextColumn Header="Category" Binding="{Binding CategoryId}" Width="*"/>
+                    <DataGridTextColumn Header="Quantity/Unit" Binding="{Binding QuantityPerUnit}" Width="*"/>
+                    <DataGridTextColumn Header="Unit Price" Binding="{Binding UnitPrice}" Width="*"/>
+                    <DataGridTextColumn Header="Stock" Binding="{Binding UnitsInStock}" Width="*"/>
+                    <DataGridTextColumn Header="On Order" Binding="{Binding UnitsOnOrder}" Width="*"/>
+                    <DataGridTextColumn Header="Reorder Level" Binding="{Binding ReorderLevel}" Width="*"/>
+                    <DataGridCheckBoxColumn Header="Discontinued" Binding="{Binding Discontinued}" Width="*" IsReadOnly="True"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </DockPanel>
+    </Grid>
+</Window>
