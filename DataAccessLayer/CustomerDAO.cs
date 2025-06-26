@@ -1,5 +1,6 @@
 ﻿using BusinessObjects;
 using BusinessObjects.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace DataAccessLayer
             try
             {
                 using var context = new LucySalesDataContext();
-                customers = context.Customers.ToList();
+                customers = context.Customers.Include(c => c.Orders).ToList();
             }catch(Exception ex)
             {
                

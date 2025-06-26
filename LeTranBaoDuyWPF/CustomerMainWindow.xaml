@@ -7,14 +7,13 @@
         mc:Ignorable="d"
         Title="LeTranBaoDuy-SE182424-CustomerMainWindow" Height="450" Width="800">
     <Grid>
-        <!-- phân bố toàn cục -->
+       
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1.5*"/>
             <ColumnDefinition Width="2.5*"/>
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Column="0" Margin="20">
-            <!-- Phân bố Profile -->
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
@@ -58,17 +57,17 @@
             </StackPanel>
         </Grid>
         
-        <!--Phân bố Order History -->
         <Grid Grid.Column="1" Margin="20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
 
             <TextBlock Text="Your Orders" FontWeight="Bold" FontSize="16"
                        Margin="0,0,0,10" HorizontalAlignment="Center"/>
 
-            <ListView x:Name="lvOrders" Grid.Row="1" HorizontalAlignment="Stretch" SelectionMode="Single" Width="460">
+            <ListView x:Name="lvOrders" Grid.Row="1" HorizontalAlignment="Stretch" SelectionMode="Single" Width="460" SelectionChanged="lvOrders_SelectionChanged">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Order ID" DisplayMemberBinding="{Binding OrderId}" Width="100"/>
@@ -77,6 +76,16 @@
                     </GridView>
                 </ListView.View>
             </ListView>
+            <GroupBox Header="Order Detail" FontWeight="Bold" Grid.Row="2" Margin="0,15,0,0">
+                <DataGrid x:Name="dgOrderDetails" AutoGenerateColumns="False" IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Product Name" Binding="{Binding Product.ProductName}" Width="*"/>
+                        <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*"/>
+                        <DataGridTextColumn Header="Unit Price" Binding="{Binding UnitPrice}" Width="*"/>
+                        <DataGridTextColumn Header="Discount" Binding="{Binding Discount}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </GroupBox>
         </Grid>
     </Grid>
 </Window>

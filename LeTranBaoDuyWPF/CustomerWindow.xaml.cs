@@ -39,11 +39,19 @@ namespace LeTranBaoDuyWPF
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             var addWindow = new CustomerEditWindow();
-            if (addWindow.ShowDialog() == true) // ShowDialog sẽ trả về true nếu người dùng nhấn OK
+            if (addWindow.ShowDialog() == true)
             {
                 var newCustomer = addWindow.GetCustomer();
-                customerService.AddCustomer(newCustomer);
+                if (customerService.AddCustomer(newCustomer))
+                {
+
+                    MessageBox.Show("Customer added successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Failed to add customer.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 LoadCustomerList();
+                }
             }
         }
 
@@ -58,32 +66,49 @@ namespace LeTranBaoDuyWPF
             if (editWindow.ShowDialog() == true)
             {
                 var updatedCustomer = editWindow.GetCustomer();
-                customerService.UpdateCustomer(updatedCustomer); // Cập nhật khách hàng
+                if(customerService.UpdateCustomer(updatedCustomer))
+                {
+                    MessageBox.Show("Customer updated successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Failed to update customer.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
                 LoadCustomerList();
             }
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            var selectedCustomer = dgCustomers.SelectedItem as Customer; // 'as' có thể hiểu là ép kiểu đối tượng
-                                                                         // , nếu không thành công sẽ trả về null
-            if (selectedCustomer != null)
+            var selectedCustomer = dgCustomers.SelectedItem as Customer;
+
+            if (selectedCustomer == null)
             {
-                var ret = MessageBox.Show($"Are you sure you want to delete customer {selectedCustomer.CompanyName}?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-                if (ret == MessageBoxResult.No)
-                {
-                    return;
-                }
-                bool isDeleted = customerService.DeleteCustomer(selectedCustomer);
-                if (isDeleted)
-                {
-                    MessageBox.Show("Customer deleted successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                    LoadCustomerList();
-                }
-                else
-                {
-                    MessageBox.Show("Failed to delete customer.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                MessageBox.Show("Please select a customer to delete.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (selectedCustomer.Orders.Any())
+            {
+                MessageBox.Show("Cannot delete customer with existing orders.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            var ret = MessageBox.Show($"Are you sure you want to delete customer {selectedCustomer.CompanyName}?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if (ret == MessageBoxResult.No)
+            {
+                return;
+            }
+
+            bool isDeleted = customerService.DeleteCustomer(selectedCustomer);
+            if (isDeleted)
+            {
+                MessageBox.Show("Customer deleted successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                LoadCustomerList();
+            }
+            else
+            {
+                MessageBox.Show("Failed to delete customer.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -114,7 +139,7 @@ namespace LeTranBaoDuyWPF
         {
             txtSearch.Clear();
             dgCustomers.ItemsSource = null;
-            dgCustomers.ItemsSource = customers; 
+            dgCustomers.ItemsSource = customers;
         }
     }
 }

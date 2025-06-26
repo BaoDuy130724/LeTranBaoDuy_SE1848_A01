@@ -21,12 +21,16 @@ namespace LeTranBaoDuyWPF
     /// </summary>
     public partial class CustomerMainWindow : Window
     {
-        OrderService orderService = new OrderService();
-        CustomerService customerService = new CustomerService();
+        OrderService orderService; 
+        CustomerService customerService; 
+        OrderDetailService orderDetailService; 
         private Customer currentCustomer;
         public CustomerMainWindow(Customer customerlogined)
         {
             InitializeComponent();
+            orderService = new OrderService();
+            customerService = new CustomerService();
+            orderDetailService = new OrderDetailService();
             currentCustomer = customerlogined;
             LoadCustomerProfile();
             LoadOrderHistory();
@@ -72,6 +76,21 @@ namespace LeTranBaoDuyWPF
             else
             {
                 MessageBox.Show("Failed to update profile.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void lvOrders_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedOrder = lvOrders.SelectedItem as Order;
+            if (selectedOrder != null)
+            {
+                var details = orderDetailService.GetDetailsByOrderId(selectedOrder.OrderId);
+                dgOrderDetails.ItemsSource = null;
+                dgOrderDetails.ItemsSource = details;
+            }
+            else
+            {
+                dgOrderDetails.ItemsSource = null; 
             }
         }
     }
