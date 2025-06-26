@@ -7,6 +7,40 @@
             mc:Ignorable="d"
             Title="LeTranBaoDuy-SE182424-OrderWindow" Height="450" Width="800">
         <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,10">
+            <TextBlock Text="Search by Customer Name" VerticalAlignment="Center"/>
+            <TextBox x:Name="txtsearch" Width="471" Margin="10, 0"/>
+            <Button Content="Search" Width="80" x:Name="btnSearch" Click="btnSearch_Click"/>
+        </StackPanel>
+        <DataGrid x:Name="dgOrders" Grid.Row="1" AutoGenerateColumns="False" SelectionChanged="dgOrders_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Order ID" Binding="{Binding OrderId}" Width="*"/>
+                <DataGridTextColumn Header="Customer" Binding="{Binding Customer.ContactName}" Width="*"/>
+                <DataGridTextColumn Header="Employee" Binding="{Binding Employee.Name}" Width="*"/>
+                <DataGridTextColumn Header="Order Date" Binding="{Binding OrderDate}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <GroupBox Header="Order Detail" Grid.Row="2" Margin="0,10,0,10">
+            <DataGrid IsReadOnly="True" x:Name="dgOrderDetail" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Product" Binding="{Binding Product.ProductName}" Width="*"/>
+                    <DataGridTextColumn Header="Unit Price" Binding="{Binding UnitPrice}" Width="*"/>
+                    <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*"/>
+                    <DataGridTextColumn Header="Discount" Binding="{Binding Discount}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </GroupBox>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+            <Button x:Name="Add" Content="Add" Width="80" Margin="5" Click="Add_Click"/>
+            <Button x:Name="Edit" Content="Edit" Width="80" Margin="5" Click="Edit_Click"/>        
+            <Button x:Name="Delete" Content="Delete" Width="80" Margin="5" Click="Delete_Click"/>
+            <Button x:Name="btnBack" Content="Back" Width="80" Margin="5" Click="btnBack_Click"/>
+        </StackPanel>
         </Grid>
     </Window>

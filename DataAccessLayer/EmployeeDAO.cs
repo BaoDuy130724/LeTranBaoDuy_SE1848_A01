@@ -15,7 +15,7 @@ namespace DataAccessLayer
             try
             {
                 using var context = new LucySalesDataContext();
-                var logined = context.Employees.FirstOrDefault(e => e.UserName.Equals(Username) && e.Password.Equals(password));
+                var logined = context.Employees.FirstOrDefault(e => e.UserName==Username && e.Password==password);
                 if (logined != null) return logined;
             }
             catch (Exception ex)
@@ -23,6 +23,19 @@ namespace DataAccessLayer
                 Console.WriteLine($"An error occurred: {ex.Message}");
             }
             return null;
+        }
+        public List<Employee> GetEmployees()
+        {
+            try
+            {
+                using var context = new LucySalesDataContext();
+                return context.Employees.ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return new List<Employee>();
+            }
         }
     }
 }

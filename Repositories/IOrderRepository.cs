@@ -15,5 +15,6 @@ namespace Repositories
         bool DeleteOrder(int orderId);
         Order GetOrderById(int orderId);
         List<Order> GetOrderByCustomerId(int customerId);
+        List<Order> GetOrdersByCustomerName(string customerName);
     }
 }

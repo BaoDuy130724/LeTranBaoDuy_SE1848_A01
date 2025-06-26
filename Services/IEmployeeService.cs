@@ -10,5 +10,7 @@ namespace Services
     public interface IEmployeeService
     {
         Employee? GetEmployeeLogin(string username, string password);
+        List<Employee> GetEmployees();
+          
     }
 }

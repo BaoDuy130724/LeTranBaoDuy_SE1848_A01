@@ -19,5 +19,10 @@ namespace Services
         {
             return iemployeeRepository.GetEmployeeLogin(username, password);   
         }
+
+        public List<Employee> GetEmployees()
+        {
+            return iemployeeRepository.GetEmployees();
+        }
     }
 }

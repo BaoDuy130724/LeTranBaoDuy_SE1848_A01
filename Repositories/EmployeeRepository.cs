@@ -32,5 +32,10 @@ namespace Repositories
         {
             return _dao.GetEmployeeLogin(Username, Password);
         }
+
+        public List<Employee> GetEmployees()
+        {
+            return _dao.GetEmployees();
+        }
     }
 }

@@ -15,5 +15,6 @@ namespace Services
         bool DeleteOrder(int orderId);
         Order GetOrderById(int orderId);
         List<Order> GetOrderByCustomerId(int customerId);
+        List<Order> GetOrdersbyCustomerName(string customerName);
     }
 }

@@ -29,7 +29,7 @@ namespace DataAccessLayer
                 Console.WriteLine($"An error occurred: {ex.Message}");
             }
             return orders;
-        } 
+        }  
         public bool AddOrder(Order order)
         {
             try
@@ -112,6 +112,24 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred while retrieving the order by customer ID: {ex.Message}");
+                return null;
+            }
+        }
+        public List<Order> GetOrdersbyCustomerName(string customerName)
+        {
+            try
+            {
+                using var context = new LucySalesDataContext();
+                return context.Orders
+                    .Include(o => o.OrderDetails)
+                    .Include(o => o.Employee)
+                    .Include(o => o.Customer)
+                    .Where(o => o.Customer.ContactName.Contains(customerName))
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving orders by customer name: {ex.Message}");
                 return null;
             }
         }

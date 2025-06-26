@@ -44,5 +44,7 @@ namespace Repositories
 
         public List<Order> GetOrderByCustomerId(int customerId) => _dao.GetOrderByCustomerId(customerId);
 
+        public List<Order> GetOrdersByCustomerName(string customerName) => _dao.GetOrdersbyCustomerName(customerName);
+
     }
 }
